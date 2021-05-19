@@ -5,5 +5,5 @@ RUN apt-get install nodejs git -y
 RUN npm install --global yarn
 RUN curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o /usr/local/bin/wp
 RUN chmod +x /usr/local/bin/wp
-RUN chown -R /var/www/html/wp-content
+RUN chown -R www-data:www-data /var/www/html/wp-content
 RUN wp --info
