@@ -1,0 +1,42 @@
+version: '3.1'
+services:
+  wordpress:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wpman
+      WORDPRESS_DB_PASSWORD: wpship
+      WORDPRESS_DB_NAME: wpdb
+    volumes:
+      - ./wordpress:/var/www/html
+      - ./wp-content/themes:/var/www/html/wp-content/themes
+      - ./wp-content/plugins:/var/www/html/wp-content/plugins
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: wpdb
+      MYSQL_USER: wpman
+      MYSQL_PASSWORD: wpship
+      MYSQL_RANDOM_ROOT_PASSWORD: "1"
+    volumes:
+      - ./db:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=db
+      - PMA_USER=wpman
+      - PMA_PASSWORD=wpship
+    links:
+      - db
+    ports:
+      - 9000:80
+    volumes:
+      - /sessions
+    
