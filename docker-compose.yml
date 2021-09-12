@@ -4,7 +4,6 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile
-    restart: always
     ports:
       - 8080:80
     environment:
@@ -18,7 +17,6 @@ services:
       - ./wp-content/plugins:/var/www/html/wp-content/plugins
   db:
     image: mysql:5.7
-    restart: always
     environment:
       MYSQL_DATABASE: wpdb
       MYSQL_USER: wpman
